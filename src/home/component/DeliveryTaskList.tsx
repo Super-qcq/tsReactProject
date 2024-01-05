@@ -37,8 +37,8 @@ export class DeliveryTaskList extends React.Component<DeliveryTaskListProps, Del
         return <div className='header'>
             <Button type="primary" onClick={() => this.isModalOpen(true)}>Button</Button>
             <Modal title="Basic Modal" open={isModal} onCancel={() => this.isModalOpen(false)}>
-                <p>dsaSome contents...</p>
-                <p>Some contents...</p>
+                <p>齐存dwadaw强dsaSome contents...</p>
+                <p>Some contents..dsds.</p>
                 <p>Some contents...</p>
             </Modal>
         </div >

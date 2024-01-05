@@ -2,9 +2,10 @@ const path = require("path"); //nodejs中的模块作用是拼接路径
 // 引入html插件
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const moduleName = process.argv[6]
 module.exports = {
     // 指定入口文件 entry：入口文件 src下建一个index.ts   值为这个路径
-    entry: "./src/home/index.tsx",
+    entry:`./src/${moduleName}/index.tsx`,
     mode: "development",
     resolve: {
         //让webpack知道哪些文件可以作为模块被引入  
@@ -13,20 +14,14 @@ module.exports = {
     // 指定打包文件所在目录
     output: {
         //指定打包文件的目录
-        path: path.resolve(__dirname, "dist"), //通过path把路径拼出来
-        filename: "bundle.js", //打包后的文件名
+        path: path.resolve(__dirname, `dist/${moduleName}`), //通过path把路径拼出来
+        filename: "[name]_[chunkhash:8].js", //打包后的文件名
         environment: {
             arrowFunction: false, // 关闭webpack的箭头函数，可选 告诉webpack不使用箭头函数
         },
     },
     // 开发模式使用，方便查错误
     devtool: "inline-source-map",
-    // 配置服务器 端口
-    devServer: {
-        port: 8088,
-        static: './public',
-    },
-
     // 配置webpack的loader 打包时要使用的模块
     module: {
         rules: [ //指定要加载的规则
@@ -81,7 +76,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new HTMLWebpackPlugin({
-            template: "./src/home/html/index.html",
+            template: path.join(__dirname,`./src/${moduleName}/html/index.html`),
         }),
     ],
 };

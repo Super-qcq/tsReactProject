@@ -13,3 +13,4 @@
 13.装cnpm i webpack-dev-server -D  在package.json中配置"dev": "webpack-dev-server"
    自动编译的功能，不用每次修改之后手动编译
 14.装cnpm i -D clean-webpack-plugin 作用 在每一次编译前把之前的目录清空 保证编译都是最新文件 避免旧文件的遗留并在webpack.config.js中进行配置
+15.编译方式: npm run build home(模块名)
