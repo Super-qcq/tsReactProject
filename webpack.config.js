@@ -1,11 +1,10 @@
 const path = require("path"); //nodejs中的模块作用是拼接路径
-//webpack中的所有配置信息都应该写在module.exports中
 // 引入html插件
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 module.exports = {
     // 指定入口文件 entry：入口文件 src下建一个index.ts   值为这个路径
-    entry: "./src/index.tsx",
+    entry: "./src/home/index.tsx",
     mode: "development",
     resolve: {
         //让webpack知道哪些文件可以作为模块被引入  
@@ -82,7 +81,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new HTMLWebpackPlugin({
-            template: "./src/index.html",
+            template: "./src/home/html/index.html",
         }),
     ],
 };
