@@ -2,10 +2,18 @@ const path = require("path"); //nodejs中的模块作用是拼接路径
 // 引入html插件
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const moduleName = process.argv[6]
+let moduleName = process.argv[6]
+if (process.argv[2] == 'serve' && !process.argv[4]) {
+    console.log('请输入正确的模块')
+    return
+}
+if (process.argv[2] == 'serve') {
+    moduleName = process.argv[4]
+}
+console.log(moduleName)
 module.exports = {
     // 指定入口文件 entry：入口文件 src下建一个index.ts   值为这个路径
-    entry:`./src/${moduleName}/index.tsx`,
+    entry: `./src/${moduleName}/index.tsx`,
     mode: "development",
     resolve: {
         //让webpack知道哪些文件可以作为模块被引入  
@@ -22,6 +30,12 @@ module.exports = {
     },
     // 开发模式使用，方便查错误
     devtool: "inline-source-map",
+    // 配置服务器 端口
+    devServer: {
+        port: 8080,
+        static: path.join(__dirname, `./src/${moduleName}/html/index.html`),
+    },
+
     // 配置webpack的loader 打包时要使用的模块
     module: {
         rules: [ //指定要加载的规则
@@ -76,7 +90,7 @@ module.exports = {
     plugins: [
         new CleanWebpackPlugin(),
         new HTMLWebpackPlugin({
-            template: path.join(__dirname,`./src/${moduleName}/html/index.html`),
+            template: path.join(__dirname, `./src/${moduleName}/html/index.html`),
         }),
     ],
 };
