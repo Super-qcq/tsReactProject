@@ -1,96 +1,108 @@
-const path = require("path"); //nodejs中的模块作用是拼接路径
-// 引入html插件
+const fs = require('fs');
+const path = require("path");
 const HTMLWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-let moduleName = process.argv[6]
-if (process.argv[2] == 'serve' && !process.argv[4]) {
-    console.log('请输入正确的模块')
-    return
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const argv = require('yargs').argv;
+// start判断
+if (argv._[0] === 'serve') {
+    console.log(argv)
+    if (!argv.open || typeof argv.open !== 'string') {
+        console.error('请在命令行中输入模块名');
+        process.exit(1);
+    } else {
+        argv.module = argv.open
+    }
 }
-if (process.argv[2] == 'serve') {
-    moduleName = process.argv[4]
+
+// 打包判断
+if (argv.env) {
+    console.log(argv)
+    if (argv.env && (!argv.module || typeof argv.module !== 'string')) {
+        console.error('请在命令行中输入模块名，例如 --module=home');
+        process.exit(1);
+    }
 }
-console.log(moduleName)
-module.exports = {
-    // 指定入口文件 entry：入口文件 src下建一个index.ts   值为这个路径
-    entry: `./src/${moduleName}/index.tsx`,
-    mode: "development",
-    resolve: {
-        //让webpack知道哪些文件可以作为模块被引入  
-        extensions: [".ts", ".tsx", ".js", ".json"]
-    },
-    // 指定打包文件所在目录
-    output: {
-        //指定打包文件的目录
-        path: path.resolve(__dirname, `dist/${moduleName}`), //通过path把路径拼出来
-        filename: "[name]_[chunkhash:8].js", //打包后的文件名
-        environment: {
-            arrowFunction: false, // 关闭webpack的箭头函数，可选 告诉webpack不使用箭头函数
+
+const srcDir = path.resolve(__dirname, 'src');
+const modulePath = findModulePath(argv.module, srcDir);
+// 输入的模块名是否在src下的判断
+if (!modulePath) {
+    console.error(`包名 ${argv.module} 在 src 目录下不存在`);
+    process.exit(1);
+}
+
+module.exports = (env) => {
+    return {
+        entry: `${modulePath}/index.tsx`,
+        mode: env === 'production' ? 'production' : 'development',
+        resolve: {
+            extensions: [".ts", ".tsx", ".js", ".json"]
         },
-    },
-    // 开发模式使用，方便查错误
-    devtool: "inline-source-map",
-    // 配置服务器 端口
-    devServer: {
-        port: 8080,
-        static: path.join(__dirname, `./src/${moduleName}/html/index.html`),
-    },
-
-    // 配置webpack的loader 打包时要使用的模块
-    module: {
-        rules: [ //指定要加载的规则
-            {
-                test: /\.tsx?$/, //test指定的是规则生效的文件
-                use: [
-                    // 配置babel
-                    // {
-                    //     //指定加载器
-                    //     loader: "babel-loader",
-                    //     // 设置babel
-                    //     options: {
-                    //         //设置预定义的环境
-                    //         presets: [
-                    //             [
-                    //                 //指定环境的插件
-                    //                 "@babel/preset-env",
-                    //                 // 配置信息
-                    //                 {
-                    //                     // 要兼容的目标浏览器及版本
-                    //                     targets: {
-                    //                         "chrome": "58",
-                    //                         "ie": "11"
-                    //                     },
-                    //                     //指定corejs的版本（根据package.json中的版本，只写整数）
-                    //                     "corejs": "3",
-                    //                     //使用corejs的方式 "usage"  表示按需加载
-                    //                     "useBuiltIns": "usage"
-                    //                 }
-
-                    //             ]
-                    //         ]
-                    //     }
-                    // },
-                    // 'babel-loader',
-                    'ts-loader',
-                ],
-                exclude: /node_modules/, //要排除的文件 默认的不用改
+        output: {
+            path: path.resolve(__dirname, `dist/${argv.module}`),
+            filename: "[name]_[chunkhash:8].js",
+            publicPath: "/",
+            environment: {
+                arrowFunction: false,
             },
-            {
-                test: /\.css/,
-                use: ['style-loader', 'css-loader']
-            },
-            {
-                test: /\.less/,
-                use: ['style-loader', 'css-loader', 'less-loader']
-            },
+        },
+        devtool: "inline-source-map",
+        devServer: {
+            port: 8080,
+            historyApiFallback: true,
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.tsx?$/,
+                    use: [
+                        'ts-loader',
+                    ],
+                    exclude: /node_modules/,
+                },
+                {
+                    test: /\.css/,
+                    use: ['style-loader', 'css-loader']
+                },
+                {
+                    test: /\.less/,
+                    use: ['style-loader', 'css-loader', 'less-loader']
+                },
+            ],
+        },
+        plugins: [
+            new CleanWebpackPlugin(),
+            new HTMLWebpackPlugin({
+                template: `${modulePath}/html/index.html`,
+            }),
         ],
-    },
-
-    // 配置webpack的插件
-    plugins: [
-        new CleanWebpackPlugin(),
-        new HTMLWebpackPlugin({
-            template: path.join(__dirname, `./src/${moduleName}/html/index.html`),
-        }),
-    ],
+    };
 };
+
+/**
+ * 判断输入的模块在src的文件目录下是否存在
+ * @param {*} moduleName 
+ * @param {*} dir 
+ * @returns 
+ */
+function findModulePath(moduleName, dir) {
+    const files = fs.readdirSync(dir);
+
+    for (let i = 0; i < files.length; i++) {
+        const filePath = path.join(dir, files[i]);
+        const stat = fs.statSync(filePath);
+
+        if (stat.isDirectory()) {
+            if (files[i] === moduleName) {
+                return filePath;
+            }
+
+            const subModulePath = findModulePath(moduleName, filePath);
+            if (subModulePath) {
+                return subModulePath;
+            }
+        }
+    }
+
+    return null;
+}

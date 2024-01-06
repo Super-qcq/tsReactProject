@@ -1,40 +1,40 @@
 {
-  "name": "project",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "build": "webpack --progress --mode development --env",
-    "dev": "webpack-dev-server",
-    "start": "webpack serve --open"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "awesome-typescript-loader": "^5.2.1",
-    "clean-webpack-plugin": "^4.0.0",
-    "css-loader": "^6.8.1",
-    "glob": "^10.3.10",
-    "html-webpack-plugin": "^5.6.0",
-    "less": "^4.2.0",
-    "less-loader": "^11.1.4",
-    "source-map-loader": "^4.0.2",
-    "style-loader": "^3.3.3",
-    "ts-loader": "^9.5.1",
-    "typescript": "^5.3.3",
-    "webpack": "^5.89.0",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1",
-    "yargs": "^17.7.2"
-  },
-  "dependencies": {
-    "@types/react": "^18.2.46",
-    "@types/react-dom": "^18.2.18",
-    "antd": "^5.12.7",
-    "axios": "^1.6.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.21.1"
-  }
+    "name": "project",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "webpack --progress --mode development --env",
+        "dev": "webpack-dev-server",
+        "start": "webpack serve --open"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "awesome-typescript-loader": "^5.2.1",
+        "clean-webpack-plugin": "^4.0.0",
+        "css-loader": "^6.8.1",
+        "glob": "^10.3.10",
+        "html-webpack-plugin": "^5.6.0",
+        "less": "^4.2.0",
+        "less-loader": "^11.1.4",
+        "source-map-loader": "^4.0.2",
+        "style-loader": "^3.3.3",
+        "ts-loader": "^9.5.1",
+        "typescript": "^5.3.3",
+        "webpack": "^5.89.0",
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^4.15.1",
+        "yargs": "^17.7.2"
+    },
+    "dependencies": {
+        "@types/react": "^18.2.46",
+        "@types/react-dom": "^18.2.18",
+        "antd": "^5.12.7",
+        "axios": "^1.6.4",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-router-dom": "^6.21.1"
+    }
 }
