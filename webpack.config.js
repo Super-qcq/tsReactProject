@@ -7,7 +7,7 @@ const argv = require('yargs').argv;
 if (argv._[0] === 'serve') {
     console.log(argv)
     if (!argv.open || typeof argv.open !== 'string') {
-        console.error('请在命令行中输入模块名');
+        console.error('请在命令行中输入模块名 如: npm run start home');
         process.exit(1);
     } else {
         argv.module = argv.open
@@ -18,7 +18,7 @@ if (argv._[0] === 'serve') {
 if (argv.env) {
     console.log(argv)
     if (argv.env && (!argv.module || typeof argv.module !== 'string')) {
-        console.error('请在命令行中输入模块名，例如 --module=home');
+        console.error('请在命令行中输入模块名，例如 npm run build -- --module about');
         process.exit(1);
     }
 }
