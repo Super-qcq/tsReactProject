@@ -2,7 +2,7 @@
 2.文件夹中npm init -y
 3.装webpack cnpm i webpack-cli webpack -D
 4.装react cnpm i react react-dom @types/react @types/react-dom  
-5.package.json 改 "scripts": { "build": "webpack" }
+5.package.json 改 "scripts": { "build": "webpack --progress --mode development --env" }
 6.根目录创建webpack.config.js
 7.装tslosder cnpm i ts-loader -D
 8.装typescript   cnpm i typescript -D
