@@ -36,7 +36,7 @@ export class DeliveryTaskList extends React.Component<DeliveryTaskListProps, Del
         const { isModal } = this.state
         return <div className='header'>
             <Button type="primary" onClick={() => this.isModalOpen(true)}>Button</Button>
-            <a href='http://localhost:8080/dist/home/index.html'>dsadasda</a>
+            <a href='http://localhost:8080/home'>dsadasda</a>
             <Modal title="Basic Modal" open={isModal} onCancel={() => this.isModalOpen(false)}>
                 <p>wawww其实dsaSome contents...</p>
                 <p>Some contents...</p>

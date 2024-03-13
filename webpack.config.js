@@ -41,7 +41,8 @@ module.exports = (env) => {
         output: {
             path: path.resolve(__dirname, `dist/${argv.module}`),
             filename: "[name]_[chunkhash:8].js",
-            publicPath: "/",
+            //网页报错地方
+            publicPath: `${argv._[0] === 'serve'?'/':'./'}`,
             environment: {
                 arrowFunction: false,
             },
