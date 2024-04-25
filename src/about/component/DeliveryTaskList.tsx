@@ -39,10 +39,10 @@ export class DeliveryTaskList extends React.Component<DeliveryTaskListProps, Del
             <a href='http://localhost:8080/home'>dsadasda</a>
             <Modal title="Basic Modal" open={isModal} onCancel={() => this.isModalOpen(false)}>
                 <p>wawww其实dsaSome contents...</p>
-                <p>Some contents...</p>
+                <p>Some contentdawdas...</p>
                 <p>wwwqqqqqqqqqqqqqqqqqqqqqqqqqqqqSome contents...</p>
             </Modal>
         </div >
-    }
+    }t
 }
 
