@@ -1,5 +1,5 @@
 import * as React from 'react'
-import "./task.less"
+import "../css/task.less"
 import { Button, Modal } from 'antd';
 
 interface DeliveryTaskListProps {
@@ -43,6 +43,6 @@ export class DeliveryTaskList extends React.Component<DeliveryTaskListProps, Del
                 <p>wwwqqqqqqqqqqqqqqqqqqqqqqqqqqqqSome contents...</p>
             </Modal>
         </div >
-    }t
+    } t
 }
 
