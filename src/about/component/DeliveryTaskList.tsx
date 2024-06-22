@@ -23,6 +23,15 @@ export class DeliveryTaskList extends React.Component<DeliveryTaskListProps, Del
     }
 
     private isModalOpen = (isModal: boolean) => {
+        let i = 1
+        let arr = []
+        arr.forEach(element => {
+
+        })
+        while (i < 10) {
+            i++
+        }
+
         this.setState({
             isModal
         })
