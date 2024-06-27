@@ -3,6 +3,7 @@ const path = require("path");
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const argv = require('yargs').argv;
+
 // start判断
 if (argv._[0] === 'serve') {
     console.log(argv)
@@ -10,7 +11,7 @@ if (argv._[0] === 'serve') {
         console.error('请在命令行中输入模块名 如: npm run start home');
         process.exit(1);
     } else {
-        argv.module = argv.open
+        argv.module = argv.open// 得到模块名
     }
 }
 
@@ -23,8 +24,9 @@ if (argv.env) {
     }
 }
 
-const srcDir = path.resolve(__dirname, 'src');
-const modulePath = findModulePath(argv.module, srcDir);
+const srcDir = path.resolve(__dirname, 'src');// src的路径
+
+const modulePath = findModulePath(argv.module, srcDir); // 拼接src下的模块路径 
 // 输入的模块名是否在src下的判断
 if (!modulePath) {
     console.error(`包名 ${argv.module} 在 src 目录下不存在`);
@@ -39,8 +41,8 @@ module.exports = (env) => {
             extensions: [".ts", ".tsx", ".js", ".json"]
         },
         output: {
-            path: path.resolve(__dirname, `dist/${argv.module}`),
-            filename: "[name]_[chunkhash:8].js",
+            path: path.resolve(__dirname, `dist/${argv.module}`), // 打包之后输出的路径在src下的dist中动态创建当前模块名的文件夹
+            filename: "[name]_[chunkhash:8].js",// 打包之后输出的文件名
             //网页报错地方 路径找不到
             publicPath: `${argv._[0] === 'serve' ? '/' : './'}`,
             environment: {
@@ -82,8 +84,8 @@ module.exports = (env) => {
 
 /**
  * 判断输入的模块在src的文件目录下是否存在
- * @param {*} moduleName 
- * @param {*} dir 
+ * @param {*} moduleName 模块名
+ * @param {*} dir src的路径
  * @returns 
  */
 function findModulePath(moduleName, dir) {
